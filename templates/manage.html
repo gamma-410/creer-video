@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="mt-4 container-fluid1">
+  
+    <h4><b><i class="bi bi-kanban"></i> 動画の管理</b></h4>
+    <p>{{ current_user.username }} さん の投稿した動画一覧</p>
+    <br>
+    <div class="grid">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+
+              <th scope="col">タイトル</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for post in posts %}
+            <tr>
+              <th scope="row">{{ post.id }}</th>
+
+              <td>{{ post.postTitle }}</td>
+              <td><a data-bs-toggle="modal" href="#exampleModalToggle{{post.id}}"><button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></button></a></td>
+                <div class="modal fade" id="exampleModalToggle{{post.id}}" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalToggleLabel">動画の消去</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            以下の動画を消去しようとしています。 確認してください。<br>
+                              <hr>
+                              <div class="item">
+                                  <img
+                                      src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/picture/{{post.imgUrl}}"
+                                      alt="サムネイル画像"
+                                    />
+                                  <hr>
+                                  <p><b>{{ post.postUser }}</b></p>
+                                  <p>{{ post.postTitle }}</p>
+                              </div>
+                              <hr>
+                              <p class="text-danger">確認事項: 一度消去すると元に戻せません。</p>
+                          </div>
+                          <div class="modal-footer">
+                              <a href="/front/studio/manage/delete/{{ post.id }}"><button class="btn btn-danger" data-bs-target="#exampleModalToggle2">理解した上で消去する</button></a>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+.item {
+  letter-spacing: 1.5px;
+  border-radius: 10px;
+  background: rgb(252, 252, 252);
+  box-shadow: 0 2px 3px rgba(19, 19, 19, 0.26);
+  padding: 10px;
+  text-align: center;
+}
+.item img {
+  border-radius: 10px;
+  width:100%;
+  height:230px;
+  object-fit: cover;
+}
+p {
+  text-align: left;
+}
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 900px;
+    margin-bottom: 150px;
+}
+</style>
+
+{% endblock %}

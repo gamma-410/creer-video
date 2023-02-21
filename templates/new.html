@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container-fluid1"><br>
+
+    <h4><b><i class="bi bi-upload"></i> 動画を投稿</b></h4>
+    <br>
+    <form action="/front" method="POST" enctype="multipart/form-data" autocomplete="off">
+        <p style="color:#7CE0E7;">タイトル</p>
+        <input class="gamma_input" name="postTitle" placeholder="動画タイトルを入力">
+        <small>タイトルに「?」「#」を含めることができません</small>
+        <br><br>
+
+        <p style="color:#7CE0E7;">概要</p>
+        <textarea class="gamma_input" name="postVideoDetail" placeholder="動画の概要を入力" id="floatingTextarea2"  style="resize:none;height:150px"></textarea>
+        <br><br><br>
+
+        <p style="color:#7CE0E7;">アップロード動画 (MP4)</p>
+        <div class="form__file">
+          <input class="file" type="file" name="videoUrl" accept="video/mp4" id="image1" />
+          <label for="image1">動画を選択</label>
+        </div>
+        <br><br>
+
+        <p style="color:#7CE0E7;">サムネイル画像 (JPG)</p>
+        <label style="display:flex;justify-content:left;">
+          <input type="file" accept="image/jpeg" onchange="previewImage(this);" style="display:none;" name="imgUrl">
+          <div class="box">
+          <img 
+            id="previewThumbnail" 
+            style=" 
+              max-width: 100%;
+              width: 300px;
+              height: 170px;
+              object-fit: cover;
+              border-radius: 10px 10px 10px 10px;
+              border:dashed rgba(0, 0, 0, 0.07) 3.5px;
+            "
+           />
+          <h3 class="center"><i class="bi bi-image-fill"></i></h3>
+          </div>
+        </label>
+        <br><br><br>
+
+        <div class="d-grid gap-2">
+            <button type="submit" style="color:rgb(241, 241, 241);background:#7CE0E7;" class="btn"><b>この内容で動画を作成</b></button>
+        </div>
+
+        <div class="loader">
+            <div class="loader__spinner">
+                <div class="loader__spinner--cube1"></div>
+                <div class="loader__spinner--cube2"></div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<style>
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 900px; 
+    margin-bottom: 150px;
+}
+
+@keyframes sk-cubemove {
+  25% {
+    transform: translateX(42px) rotate(-90deg) scale(0.5);
+  }
+  50% {
+    transform: translateX(42px) translateY(42px) rotate(-179deg);
+  }
+  50.1% {
+    transform: translateX(42px) translateY(42px) rotate(-180deg);
+  }
+  75% {
+    transform: translateX(0px) translateY(42px) rotate(-270deg) scale(0.5);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 6;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.loader__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 57px;
+  height: 57px;
+  transform: translate(-50%, -50%);
+}
+.loader__spinner--cube1, .loader__spinner--cube2 {
+  background-color: #ffffff;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: sk-cubemove 2s infinite ease-in-out;
+}
+.loader__spinner--cube2 {
+  animation-delay: -1s;
+}
+.box{
+  position: relative;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:rgba(0, 0, 0, 0.08);
+}
+
+/* movie */
+.form__file input[type="file"] {
+    display: none;
+}
+.form__file label {
+    background: #7CE0E7;
+    color: white;
+    font-size: 0.8rem;
+    padding: 8px 10px;
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    margin-right: 8px;
+}
+.form__file label:hover {
+    opacity: 0.7;
+    transition: 0.3s ease-out;
+}
+.form__file label:after {
+    content: "選択されていません";
+    color: #333;
+    font-size: 14px;
+    height: 20px;
+    line-height: 20px;
+    position: absolute;
+    right: -140px;
+    top: calc(50% - 11px);
+}
+.form__file label.changed:after {
+    content: "";
+}
+.form__file .filename {
+    font-size: 12px;
+}
+
+</style>
+<script>
+    const myFunc = ()=>{
+    const form = document.forms[0];
+    const button = form.querySelector('button');
+    const loader = form.querySelector('.loader');
+    button.addEventListener('click', (e)=>{
+        //ローダーを表示する
+        loader.style.display = 'block';
+        //～
+        //非同期処理追加
+        //～
+    }, false);
+};
+myFunc();
+
+  function previewImage(obj){
+    var fileReader = new FileReader();
+    fileReader.onload = (function() {
+      document.getElementById('previewThumbnail').src = fileReader.result;
+    });
+    fileReader.readAsDataURL(obj.files[0]);
+  }
+
+
+  const formInputs = document.getElementsByClassName("file");
+  const length = formInputs.length;
+  for (let i = 0; i < length; i++) {
+    formInputs[i].onchange = function () {
+      const file = this.files[0].name;
+      const label = this.nextElementSibling;
+      if (!label.classList.contains("changed")) {
+        const span = document.createElement("span");
+        span.className = "filename";
+        this.parentNode.appendChild(span);
+        label.classList.add("changed");
+      }
+      label.nextElementSibling.innerHTML = file;
+    };
+  }
+</script>
+
+{% endblock %}

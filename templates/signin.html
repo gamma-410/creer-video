@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-primary" role="alert">
+      {{ msg }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="container-fluid1">
+  <div class="c-f">
+  
+    <h4><b>ログイン</b></h4>
+    <br>
+
+    <div class="d-grid gap-2">
+        <form method="POST" autocomplete="off">
+          <div class="mb-3">
+            <label style="color:#7CE0E7;" for="exampleInputEmail1" class="form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="useremail" placeholder="mail@example.com">
+          </div>
+          <div class="mb-3">
+            <label style="color:#7CE0E7;" for="exampleInputPassword1" class="form-label">パスワード</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+          </div>
+            <div class="mt-5 d-grid gap-2 col-6 mx-auto" style="text-align:center;">
+                <button type="submit" class="btn" style="color:rgb(241, 241, 241);background:#7CE0E7;">ログインする</button>
+            </div>
+        </form>
+    </div>
+    
+  </div>
+</div>
+
+<style>
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 900px;
+    margin-bottom: 150px;
+}
+@media screen and (max-width: 700px) {
+  .c-f {
+    padding: 20px;
+    border-radius: 0px;
+  }
+}
+
+</style>
+
+
+{% endblock %}

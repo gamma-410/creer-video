@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container-fluid1"><br>
+  
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-primary" role="alert">
+            {{ msg }}
+          </div>
+          <br>
+        {% endfor %}
+      {% endif %}
+      {% endwith %}
+
+    <h4><b><i class="bi bi-kanban"></i> CreatorStudio</b></h4>
+    <p>{{ current_user.username }} さん のクリエイタースタジオ</p>
+    <br>
+    <div class="imgs">
+      <img width="60%" src="{{ url_for('static', filename='images/studio.svg') }}">
+    </div>
+    <div class="d-grid gap-2">
+        <small style="color:#7CE0E7;">アップロード</small>
+        <a class="btn" style="color:rgb(241, 241, 241);background:#7CE0E7;" href="/front/studio/create"><i class="bi bi-upload"></i> 新しい動画を投稿</a>
+        <br>
+        <small style="color:#7CE0E7;">コンテンツ</small>
+        <a class="btn" style="color:rgb(241, 241, 241);background:#7CE0E7;" href="/front/studio/manage"><i class="bi bi-kanban"></i> 投稿した動画の管理</a>
+    </div>
+</div>
+<br><br>
+
+<style>
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 900px;
+    margin-bottom: 150px; 
+}
+.imgs {
+  max-width: 100%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+  object-fit: cover;
+}
+
+.loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: none;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.loader__spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 57px;
+  height: 57px;
+  transform: translate(-50%, -50%);
+}
+.loader__spinner--cube1, .loader__spinner--cube2 {
+  background-color: #ffffff;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: sk-cubemove 2s infinite ease-in-out;
+}
+.loader__spinner--cube2 {
+  animation-delay: -1s;
+}
+@media screen and (max-width: 700px) {
+  .imgs img {
+    width: 100%;
+  }
+}
+</style>
+
+
+{% endblock %}

@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <meta name="twitter:site" content="@gamma_410">
+    <meta name="twitter:description" content="{{ post.postTitle }}">
+    <meta name="twitter:title" content="CRÉER">
+    <meta name="twitter:url" content="https://creer-video.glitch.me/front/watch/{{ post.id }}">
+    <meta name="twitter:image" content="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/picture/{{ post.imgUrl }}">
+    <meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+
+{% block body %}
+<div class="watch-container">
+
+    <div class="watch-item">
+        <video-js data-setup='{}' controls>
+            <source
+                    src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/video/{{ post.videoUrl }}"
+                    poster="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/picture/{{ post.imgUrl }}"
+            >
+        </video-js>
+    </div>
+    <div class="watch-item subs">
+    <br>
+        <div class="title-box">
+            <p>{{ post.postTitle }}</p>
+        </div>
+    <hr>
+        <div class="username-box">
+            <table>
+                <td>
+                    <a href="/front/user/{{ post.postUser }}">
+                        <img style="object-fit:cover;border-radius:50%;" width="45px" height="45px" src="https://object.gamma410.win/creer/users/{{ post.postUser }}.jpg">
+                    </a>
+                </td>
+                <td>
+                    <a href="/front/user/{{ post.postUser }}"><h6 style="padding-left:10px;">{{ post.postUser }}</h6></a>
+                </td>
+            </table>
+        </div>
+        <div class="detail-box">
+            <p>{{ post.postVideoDetail }}</p>
+        </div>
+    </div>
+
+</div>
+
+<br>
+<div class="btn-group" role="group" aria-label="Basic outlined example">
+    <button data-bs-toggle="modal" href="#exampleModalToggle" type="button" class="btn btn-outline-info"><i class="bi bi-share"></i> 動画を共有</button>
+    <button type="button" class="btn btn-outline-info">報告</button>
+</div>
+<div class="boxes"></div>
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalToggleLabel">動画を共有</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <p>URLをコピー</p>
+          <div class="input-group mb-3">
+            <input id="url_input" type="text" class="form-control" value="https://creer.gamma410.win/front/watch/{{ post.id }}" readonly aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="copyToClipboard()">
+                <i class="bi bi-clipboard"></i>
+            </button>
+          </div>
+          <p>SNSへ送信</p>
+          <div class="d-grid gap-2">
+              <a class="btn line-sns" target="_blank" rel="noopener noreferrer" type="button" href="https://social-plugins.line.me/lineit/share?url=https://creer.gamma410.win/front/watch/{{ post.id }}"><i class="bi bi-line"></i> LINE</a>
+              <a class="btn twitter-sns" target="_blank" rel="noopener noreferrer" type="button" href="https://twitter.com/share?url=https://creer.gamma410.win/front/watch/{{ post.id }}%0a&text={{ post.postTitle }}%0a&hashtags=動画共有プラットフォームCRÉER"><i class="bi bi-twitter"></i> Twitter</a>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <div style="z-index: 5;" class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div class="toast align-items-center alert" role="alert" aria-live="assertive" aria-atomic="true">
+          <div class="d-flex">
+            <div class="toast-body">
+              <i class="bi bi-volume-mute-fill"></i> 音声がミュートになっています。
+            </div>
+            <button type="button" class="btn-close btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+          </div>
+        </div>
+    </div>
+
+
+<style>
+.line-sns{
+    background: #06c755;
+    color: #ffffff;
+}
+.twitter-sns{
+    background: #00acee;
+    color: #ffffff;
+}
+.facebook-sns{
+    background: #3b5998;
+    color:#ffffff;
+}
+.email-sns{
+    background: #9daac4;
+    color: #ffffff;
+}
+  @media screen and (max-width: 800px){
+    .header-container {
+      display: none;
+    }
+  }
+
+    header{ top:0; z-index:100; }
+    main > section{ max-width:640px; margin:0 auto; padding-top:57px; }
+    main > section h2{ margin-bottom:10px; color:#1c1c1c; font-size:18px; }
+    main > section p{ margin:10px 0 0; color:#121212; font-size:14px; }
+    .video-js{
+        width:100%;
+        height:100%;
+        margin:0 auto;
+        padding-top:56.25%; /*比率調整※16:9の画面幅*/
+        color:#ffffff;
+        background:#1b1b1b;
+    }
+    .video-js .vjs-tech{ outline:none; }
+    .video-js .vjs-big-play-button:focus{ background:none; }
+    /*再生ボタン(大)*/
+    .video-js:hover .vjs-big-play-button,
+    .video-js .vjs-big-play-button{
+        height:90px;
+        width:90px;
+        border:2px solid #e9e9e9;/*ドット枠線*/
+        border-radius: 50%;/*形を丸に*/
+        font-size:5em;/*三角の大きさ変更*/
+        line-height:90px;
+        background: #f4f4f442;
+        /*動画の中心に再生ボタンを移動*/
+        top:50%;
+        left:50%;
+        transform: translate(-50%, -50%);
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+    }
+    /*再生ボタンをマウスオーバーしたら*/
+    .video-js .vjs-big-play-button:hover{ background: #d9d9d9b5; }
+    /*コントローラー*/
+    .video-js .vjs-control-bar{ background: #6c6c6c4a;}
+    /*再生バー*/
+    .video-js .vjs-slider,
+    .video-js .vjs-load-progress div{ background: hsl(170, 86%, 50%); }
+
+    .boxes{
+        padding-top: 250px;
+    }
+</style>
+<script>
+    var toastElList = [].slice.call(document.querySelectorAll(".toast"));
+    var toastList = toastElList.map(function (toastEl) {
+        return new bootstrap.Toast(toastEl, {
+            delay: 10000,
+        });
+    });
+    function showToast() {
+        toastList[0].show();
+    }
+
+    const video = document.getElementsByTagName("video-js")
+    video.addEventListener("playing", function() {
+        showToast();
+    });
+
+        function copyToClipboard() {
+            var copyTarget = document.getElementById("url_input");
+            copyTarget.select();
+            document.execCommand("Copy");
+            alert("URLをコピーできました！");
+        }
+ </script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}
+          <div class="alert alert-primary" role="alert">
+            {{ msg }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="video-container">
+        {% for post in posts %}
+        <div class="video-item">
+            <a class="text-dark" href="/front/watch/{{ post.id }}">
+                <img 
+                    class="flex-img"
+                    src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/picture/{{post.imgUrl}}"
+                >
+                <div class="card-text">
+                  <table>
+                    <td>
+                      <a href="/front/user/{{ post.postUser }}">
+                        <img 
+                          src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/users/{{post.postUser}}.jpg" 
+                          style="
+                            margin-top: 16px;
+                            width: 45px;
+                            height: 45px;
+                            object-fit: cover;
+                            border-radius: 50px;
+                          "
+                        >
+                      </a>
+                    </td>
+                    <td>
+                      <p class="card-title">{{ post.postTitle }}</p>
+                      <a class="card-user" href="/front/user/{{ post.postUser }}">{{ post.postUser }}</a>
+                    </td>
+                  </table>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="footer-container">
+        <div class="footer-item">
+          <small>Copyright © 2022 CRÉER All Rights Reserved.</small>
+        </div>
+    </div>
+    <br><br>
+    <br><br>
+    <style>
+      td {
+        vertical-align: top;
+      }
+
+    </style>
+    <script>
+      var $grid = $('.video-container'),   
+          emptyCells = [],
+          i;
+
+      // 子パネル (li.cell) の数だけ空の子パネル (li.cell.is-empty) を追加する。
+      for (i = 0; i < $grid.find('.video-item').length; i++) {
+          emptyCells.push($('<div>', { class: 'video-item is-empty' }));
+      }
+
+      $grid.append(emptyCells);
+    </script>
+{% endblock %}

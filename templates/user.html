@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="video-container">
+        <div class="userBox">
+            <div class="userBoxItem items2">
+                <table>
+                    {% if userName.username == current_user.username %}
+                    <td>
+                      <div class="box">
+                        <a href="/front/user/edit_profile/{{ current_user.username }}">
+                          <img class="userBoxIcon me" src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/users/{{userIcon.postUser}}.jpg">
+                          <h3 class="center"><i class="bi bi-pencil-square"></i></h3>
+                        </a>
+                      </div>
+                    </td>
+                    {% else %}
+                    <td>
+                      <img class="userBoxIcon" src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/users/{{userIcon.postUser}}.jpg">
+                    </td>
+                    {% endif %}
+                    <td>
+                        <h3 class="userBoxName">{{ userName.username }}</h3>
+                        <p class="userBoxName">{{ userName.userdetail }}</p>
+                    </td>
+                </table>
+            </div>
+            <div class="userBoxItem">
+                <div class="userBoxCount">
+                    <p><b>STATUS</b></p>
+                    <div class="status-flex">
+                        <div class="status-item">
+                            <p><i class="bi bi-film"></i> 投稿: </p>
+                        </div>
+                        <div class="status-item">
+                            <p><b>{{ userCount }} 回</b></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for post in posts %}
+        <div class="video-item">
+            <a class="text-dark" href="/front/watch/{{ post.id }}">
+                <img 
+                    class="flex-img"
+                    src="https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/picture/{{post.imgUrl}}"
+                >
+                <div class="card-text">
+                  <table>
+                    <td>
+                    <a href="/front/user/{{ post.postUser }}">
+                      <img 
+                        src="https://https://pub-790e45e5f3cf4b628d5ccdf76f387955.r2.dev/creer/users/{{post.postUser}}.jpg" 
+                        style="
+                          margin-top: 16px;
+                          width: 45px;
+                          height: 45px;
+                          object-fit: cover;
+                          border-radius: 50px;
+                        "
+                      >
+                    </a>
+                    </td>
+                    <td>
+                      <p class="card-title">{{ post.postTitle }}</p>
+                      <a class="card-user" href="/front/user/{{ post.postUser }}">{{ post.postUser }}</a>
+                    </td>
+                  </table>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="footer-container">
+        <div class="footer-item">
+          <small>Copyright © 2022 CRÉER All Rights Reserved.</small>
+        </div>
+    </div>
+    <br><br>
+    <br><br>
+    <style>
+      td {
+        vertical-align: top;
+      }
+      .box{
+        position: relative;
+      }
+      .center {
+        position: absolute;
+        top: 85%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        color:rgba(0, 0, 0, 0.513);
+      }
+    </style>
+    <script>
+      var $grid = $('.video-container'),   
+          emptyCells = [],
+          i;
+
+      // 子パネル (li.cell) の数だけ空の子パネル (li.cell.is-empty) を追加する。
+      for (i = 0; i < $grid.find('.video-item').length; i++) {
+          emptyCells.push($('<div>', { class: 'video-item is-empty' }));
+      }
+
+      $grid.append(emptyCells);
+    </script>
+{% endblock %}

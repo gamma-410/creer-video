@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+  {% for msg in messages %}
+    <div class="alert alert-primary" role="alert">
+      {{ msg }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="container-fluid1">
+  <div class="c-f">
+    
+    <h4><b>新規登録</b></h4>
+    <br>
+
+    <div class="d-grid gap-2">
+        <form method="POST" enctype="multipart/form-data" autocomplete="off">
+          <p style="color:#7CE0E7;">アイコンの設定 (JPG)</p>
+          <label style="display:flex;justify-content:center;">
+            <input type="file" accept="image/jpeg" onchange="previewImage(this);" style="display:none;" name="usericon">
+            <div class="box">
+            <img 
+              id="preview" 
+              style="
+                max-width: 100%; 
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 50%;
+                border: dashed rgb(238, 238, 238) 3.5px;
+              "
+            >
+            <h3 class="center"><i class="bi bi-image-fill"></i></h3>
+            </div>
+          </label><br>
+          <div class="mb-3">
+            <label style="color:#7CE0E7;" for="exampleInputEmail1" class="form-label">メールアドレス</label>
+            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="useremail" placeholder="mail@example.com">
+          </div>
+          <div class="mb-3">
+            <label style="color:#7CE0E7;" for="exampleInputPassword1" class="form-label">パスワード</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="パスワードを入力">
+          </div>
+          <div class="mb-3">
+            <label style="color:#7CE0E7;" for="exampleInputEmail1" class="form-label">CRÉERで表示される名前 (変更できません)</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="username" placeholder="CRÉER さん">
+          </div>
+          <div class="mt-5 d-grid gap-2 col-6 mx-auto" style="text-align:center;">
+            <button type="submit" class="btn pil" style="color:rgb(241, 241, 241);background:#7CE0E7;">登録する</button>
+          </div>
+        </form>
+    </div>
+    
+  </div>
+</div>
+
+
+<style>
+.container-fluid {
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 900px;
+    margin-bottom: 150px;
+}
+@media screen and (max-width: 700px) {
+  .c-f {
+    padding: 20px;
+    border-radius: 0px;
+  }
+}
+.box{
+  position: relative;
+}
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color:rgba(0, 0, 0, 0.08);
+}
+</style>
+
+<script>
+  function previewImage(obj){
+    var fileReader = new FileReader();
+    fileReader.onload = (function() {
+      document.getElementById('preview').src = fileReader.result;
+    });
+    fileReader.readAsDataURL(obj.files[0]);
+  }
+  </script>
+
+{% endblock %}
